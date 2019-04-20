@@ -3,6 +3,8 @@ package com.examples.helloservlet;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
+import java.util.logging.Logger;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -14,8 +16,13 @@ public class HelloWorldServletIT {
 
 	@BeforeClass
 	public static void setup() {
-		RestAssured.port =
-			Integer.parseInt(System.getProperty("tomcat.port", "8080"));
+		int tomcatPort =
+			Integer.parseInt(System.getProperty("tomcat.http.port", "8080"));
+		RestAssured.port = tomcatPort;
+		Logger.
+			getLogger(HelloWorldServletIT.class.toString()).
+			info("Using URL: " +
+				RestAssured.baseURI + ":" + RestAssured.port);
 	}
 
 	@Test
