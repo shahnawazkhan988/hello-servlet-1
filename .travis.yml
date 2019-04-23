@@ -1,9 +1,13 @@
 language: java
 
+# explicit distribution specification to use xvfb as a service
+dist: xenial
+
 jdk: openjdk8
 
 services:
-   - docker
+  - docker
+  - xvfb
 
 # skip installation step
 install: true
