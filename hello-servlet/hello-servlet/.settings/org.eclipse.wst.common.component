@@ -4,6 +4,9 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="hello-servlet-services-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/hello-servlet-services/hello-servlet-services">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="hello-servlet"/>
         <property name="java-output-path" value="/hello-servlet/target/classes"/>
     </wb-module>
