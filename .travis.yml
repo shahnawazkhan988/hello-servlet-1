@@ -17,4 +17,4 @@ cache:
       - $HOME/.m2
 
 script:
-   - mvn -f hello-servlet/hello-servlet/pom.xml clean verify
+   - mvn -f hello-servlet/hello-servlet-parent/pom.xml clean verify
