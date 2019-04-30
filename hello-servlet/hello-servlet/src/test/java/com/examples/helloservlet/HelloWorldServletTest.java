@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import com.examples.helloservlet.services.HelloNameService;
 
 public class HelloWorldServletTest {
 	@Mock
@@ -22,13 +25,15 @@ public class HelloWorldServletTest {
 	private HttpServletResponse response;
 	@Mock
 	private RequestDispatcher requestDispatcher;
+	@Mock
+	private HelloNameService helloNameService;
 
+	@InjectMocks
 	private HelloWorldServlet helloWorldServlet;
 
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		helloWorldServlet = new HelloWorldServlet();
 	}
 
 	@Test
@@ -45,26 +50,17 @@ public class HelloWorldServletTest {
 	}
 
 	@Test
-	public void doPostWithoutName() throws Exception {
-		when(request.getRequestDispatcher("response.jsp")).
-			thenReturn(requestDispatcher);
-
-		helloWorldServlet.doPost(request, response);
-
-		verify(request).setAttribute("user", "World");
-		verify(requestDispatcher).forward(request, response);
-	}
-
-	@Test
-	public void doPostWithName() throws Exception {
+	public void doPost() throws Exception {
 		when(request.getParameter("name"))
 			.thenReturn("A Name");
 		when(request.getRequestDispatcher("response.jsp")).
 			thenReturn(requestDispatcher);
+		when(helloNameService.processName(anyString()))
+			.thenReturn("A Name Processed");
 
 		helloWorldServlet.doPost(request, response);
 
-		verify(request).setAttribute("user", "A Name");
+		verify(request).setAttribute("user", "A Name Processed");
 		verify(requestDispatcher).forward(request, response);
 	}
 }

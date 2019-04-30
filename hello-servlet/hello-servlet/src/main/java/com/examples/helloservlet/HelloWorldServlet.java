@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
+import com.examples.helloservlet.services.HelloNameService;
 
 /**
  * Servlet implementation class HelloWorldServlet
@@ -15,11 +15,10 @@ import org.apache.commons.lang3.StringUtils;
 public class HelloWorldServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public HelloWorldServlet() {
-		super();
+	private HelloNameService helloNameService;
+
+	public HelloWorldServlet(HelloNameService helloNameService) {
+		this.helloNameService = helloNameService;
 	}
 
 	/**
@@ -37,9 +36,7 @@ public class HelloWorldServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String name = request.getParameter("name");
-		if (StringUtils.isEmpty(name))
-			name = "World";
+		String name = helloNameService.processName(request.getParameter("name"));
 		request.setAttribute("user", name);
 		request.getRequestDispatcher("response.jsp")
 			.forward(request, response);
